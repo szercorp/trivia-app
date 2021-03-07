@@ -9,10 +9,10 @@ export const styles = {
   },
   quizScreenHeaderContainer: {
     width: "100%",
-    height: 100,
+    height: 120,
     marginTop: 50,
     alignItems: "center",
-    justifyContent: "center",
+    // justifyContent: "center",
   },
   headerHeading: {
     color: colors.white,
@@ -21,12 +21,13 @@ export const styles = {
     textAlign: "center",
   },
   quizScreenContentsContainer: {
+    height: 500,
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
   },
   questionsContainer: {
     width: 350,
-    height: 400,
+    height: 300,
     backgroundColor: "#1a1a36",
     borderRadius: 20,
     alignItems: "center",
@@ -35,10 +36,12 @@ export const styles = {
   questionsText: {
     color: colors.white,
     fontSize: 20,
-    textAlign: "center",
+    textAlign: "left",
+    width: 300,
+    lineHeight: 25,
   },
   questionsNumberContainer: {
-    marginTop: 25,
+    marginBottom: 45,
   },
   questionsNumber: {
     color: colors.white,
@@ -73,7 +76,7 @@ export const styles = {
   falseButtonText: {
     fontFamily: "MontserratBold",
     fontSize: 16,
-    color: colors.offWhite,
+    color: colors.white,
   },
   loadingContainer: {
     flex: 1,

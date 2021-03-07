@@ -25,7 +25,7 @@ const HomeScreen = ({ navigation, reset }) => {
           Welcome to the Trivia challenge!
         </Text>
       </View>
-      <View style={styles.homeScreenContentsContents}>
+      <View style={styles.homeScreenContentsContainer}>
         <Text style={styles.contentsHeading}>
           You will be presented with 10 True or False questions.
         </Text>

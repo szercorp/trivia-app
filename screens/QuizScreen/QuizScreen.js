@@ -4,26 +4,19 @@ import { increment, total_questions } from "../../models/trivia/actions";
 import { StyleSheet, View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "../../components/Button";
-import { colors } from "../../assets/global-styles/index";
 import { styles as quizScreenStyles } from "./styles";
-import ResultsScreen from "../ResultsScreen/ResultsScreen";
-// import { connect } from "react-redux";
-// import {
-//   incrementCorrectAnswers,
-//   totalQuestionsNumber,
-// } from "../../models/trivia/actions";
 import _ from "lodash";
 
 const QuizScreen = ({ increment, navigation, totals, total_questions }) => {
   const [questions, setQuestions] = useState([]);
   const [current_question, setCurrentQuestion] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState("Loading Quiz...");
 
   useEffect(() => {
     fetch("https://opentdb.com/api.php?amount=10&difficulty=hard&type=boolean")
       .then((response) => response.json())
       .then((data) => {
-        setLoading(true);
+        setLoadingText(true);
         total_questions(data.results.length);
         setQuestions(data.results);
         // console.log("Number of Questions:", data.results.length);
@@ -46,8 +39,7 @@ const QuizScreen = ({ increment, navigation, totals, total_questions }) => {
     // });
   }, []);
 
-  console.log(questions);
-  // console.log(totals);
+  // console.log(questions);
 
   const trueButtonStyles = {
     container: styles.trueButton,
@@ -62,15 +54,10 @@ const QuizScreen = ({ increment, navigation, totals, total_questions }) => {
   const onNextQuestion = (answer) => {
     let correct_answer = questions[current_question].correct_answer == "True";
 
-    console.log("Correct:", correct_answer);
-
     if (answer == correct_answer) increment();
 
-    console.log(totals.total_questions);
-    console.log(total_questions.answers_total);
-
     if (current_question >= totals.total_questions - 1) {
-      navigation.navigate("ResultsScreen", { questions });
+      navigation.navigate("ResultsScreen", { data: questions });
     } else {
       setCurrentQuestion(current_question + 1);
     }
@@ -79,7 +66,7 @@ const QuizScreen = ({ increment, navigation, totals, total_questions }) => {
   if (_.isEmpty(questions)) {
     return (
       <View style={styles.loadingContainer}>
-        <Text style={styles.loadingContainerText}>{loading}</Text>
+        <Text style={styles.loadingContainerText}>{loadingText}</Text>
       </View>
     );
   }
@@ -98,7 +85,9 @@ const QuizScreen = ({ increment, navigation, totals, total_questions }) => {
           </Text>
         </View>
         <View style={styles.questionsNumberContainer}>
-          <Text style={styles.questionsNumber}>{current_question + 1}</Text>
+          <Text style={styles.questionsNumber}>
+            {current_question + 1} of {totals.total_questions}
+          </Text>
         </View>
       </View>
       <View style={styles.quizScreenFooterContainer}>

@@ -1,42 +1,68 @@
 import React, { useEffect, useState } from "react";
-import { ReactComponent as Goat } from "../../assets/images/goat.svg";
 import { connect } from "react-redux";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { reset } from "../../models/trivia/actions";
+import { StyleSheet, View, Text, Image, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "../../components/Button";
 import { colors } from "../../assets/global-styles/index";
 import { styles as resultsScreenStyles } from "./styles";
 
-const ResultsScreen = ({ navigation, totals, questions }) => {
+const ResultsScreen = ({ navigation, totals, reset, route }) => {
   const [perfect, setPerfect] = useState(false);
-  const [message, setMessage] = useState("");
+
+  const { data } = route.params;
 
   useEffect(() => {
-    if (totals.answers_total == totals.total_questions) {
+    if (totals.correct_answers == totals.total_questions) {
       setPerfect(true);
     }
-  });
+  }, []);
 
-  console.log("Results:", questions);
+  const playAgain = () => {
+    reset();
+    navigation.navigate("HomeScreen");
+  };
 
   const playAgainButtonStyles = {
     container: styles.playAgainButton,
     textField: styles.playAgainButtonText,
     gradient: styles.playAgainButtonGradient,
   };
+
+  const Item = ({ item }) => {
+    return (
+      <View style={styles.listItem}>
+        <View style={styles.checkIconContainer}>
+          {item.correct_answer === "True" ? (
+            <Image
+              style={styles.checkIcon}
+              source={require("../../assets/images/checked.png")}
+            />
+          ) : (
+            <Image
+              style={styles.checkIcon}
+              source={require("../../assets/images/cancel.png")}
+            />
+          )}
+        </View>
+        <Text style={styles.questionText}>{item.question}</Text>
+      </View>
+    );
+  };
+
   return (
     <SafeAreaView style={styles.safeAreaViewContainer}>
-      <View style={styles.resultsScreenHeaderContents}>
+      <View style={styles.resultsScreenHeaderContainer}>
         <Text style={styles.headerHeading}>You scored:</Text>
         <Text style={styles.headerScore}>
-          {totals.answers_total} of {totals.total_questions}
+          {totals.correct_answers} of {totals.total_questions}
         </Text>
+        <Text style={styles.headerMessage}>Scroll to see the results</Text>
       </View>
       <View style={styles.resultsScreenContentsContainer}>
-        {perfect === true && (
-          <View
-            style={{ alignItems: "center", justifyContent: "space-around" }}
-          >
+        {perfect === true ? (
+          <View style={styles.perfectScoreContainer}>
+            <Text style={styles.contentsMessage}>No need for results</Text>
             <Text style={styles.contentsMessage}>
               You are the G.O.A.T of this game!!!
             </Text>
@@ -45,7 +71,15 @@ const ResultsScreen = ({ navigation, totals, questions }) => {
               style={styles.goatImage}
             />
           </View>
+        ) : (
+          <FlatList
+            style={styles.flatListContainer}
+            data={data}
+            renderItem={({ item }) => <Item item={item} />}
+            keyExtractor={(item) => item.item}
+          ></FlatList>
         )}
+
         <View>
           <Text style={{ color: "white" }}>{totals.totals}</Text>
         </View>
@@ -57,7 +91,7 @@ const ResultsScreen = ({ navigation, totals, questions }) => {
           colors={[colors.purple, colors.blue]}
           start={{ x: 0, y: 0.5 }}
           end={{ x: 1, y: 0.5 }}
-          onPress={() => navigation.navigate("HomeScreen")}
+          onPress={() => playAgain()}
         />
       </View>
     </SafeAreaView>

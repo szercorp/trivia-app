@@ -9,7 +9,7 @@ export const styles = {
   },
   homeScreenHeaderContainer: {
     width: "100%",
-    height: 100,
+    height: 120,
     marginTop: 50,
     alignItems: "center",
     justifyContent: "center",
@@ -20,8 +20,7 @@ export const styles = {
     fontFamily: "MontserratBold",
     textAlign: "center",
   },
-  homeScreenContentsContents: {
-    width: "100%",
+  homeScreenContentsContainer: {
     height: 400,
     alignItems: "center",
     justifyContent: "space-around",
