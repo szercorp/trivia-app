@@ -7,34 +7,49 @@ export const styles = {
     alignItems: "center",
     justifyContent: "space-between",
   },
-  quizScreenHeading: {
-    width: 300,
+  quizScreenHeaderContainer: {
+    width: "100%",
+    height: 100,
+    marginTop: 50,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  headerHeading: {
     color: colors.white,
     fontSize: 30,
     fontFamily: "MontserratBold",
-    marginTop: 50,
     textAlign: "center",
   },
-  quizScreenContents: {
+  quizScreenContentsContainer: {
     alignItems: "center",
+    justifyContent: "space-between",
   },
   questionsContainer: {
     width: 350,
     height: 400,
     backgroundColor: "#1a1a36",
     borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  questionsText: {
+    color: colors.white,
+    fontSize: 20,
+    textAlign: "center",
+  },
+  questionsNumberContainer: {
+    marginTop: 25,
   },
   questionsNumber: {
     color: colors.white,
     fontSize: 20,
-    marginTop: 25,
   },
-  checkButtonContainer: {
-    width: 350,
+  quizScreenFooterContainer: {
+    width: "100%",
     height: 50,
     marginBottom: 50,
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
   },
   trueButton: {
     backgroundColor: "green",
@@ -59,5 +74,16 @@ export const styles = {
     fontFamily: "MontserratBold",
     fontSize: 16,
     color: colors.offWhite,
+  },
+  loadingContainer: {
+    flex: 1,
+    backgroundColor: "#070723",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  loadingContainerText: {
+    color: colors.white,
+    fontSize: 30,
+    fontFamily: "MontserratBold",
   },
 };

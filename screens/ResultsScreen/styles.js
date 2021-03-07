@@ -7,7 +7,7 @@ export const styles = {
     alignItems: "center",
     justifyContent: "space-between",
   },
-  homeScreenHeaderContainer: {
+  resultsScreenHeaderContents: {
     width: "100%",
     height: 100,
     marginTop: 50,
@@ -20,25 +20,21 @@ export const styles = {
     fontFamily: "MontserratBold",
     textAlign: "center",
   },
-  homeScreenContentsContents: {
-    width: "100%",
-    height: 400,
+  resultsScreenContentsContainer: {
+    width: 350,
+    height: 500,
+    backgroundColor: "#1a1a36",
+    borderRadius: 20,
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "center",
   },
-  contentsHeading: {
-    color: colors.white,
-    fontSize: 25,
-    fontFamily: "Montserrat",
-    textAlign: "center",
-  },
-  homeScreenFooterContainer: {
+  resultsScreenFooterContainer: {
     width: "100%",
     height: 50,
     marginBottom: 50,
     alignItems: "center",
   },
-  beginButton: {
+  playAgainButton: {
     width: 200,
     height: "100%",
     borderRadius: 50,
@@ -52,13 +48,13 @@ export const styles = {
     //shadow - android
     elevation: shadows.purpleShadowElevation,
   },
-  beginButtonGradient: {
+  playAgainButtonGradient: {
     width: 200,
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
   },
-  beginButtonText: {
+  playAgainButtonText: {
     fontFamily: "MontserratBold",
     fontSize: 16,
     color: colors.offWhite,

@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { reset } from "../../models/trivia/actions";
 import { StyleSheet, View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "../../components/Button";
 import { colors } from "../../assets/global-styles/index";
 import { styles as homeScreenStyles } from "./styles";
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation, reset }) => {
+  useEffect(() => {
+    reset();
+  }, []);
+
   const beginButtonStyles = {
     container: styles.beginButton,
     textField: styles.beginButtonText,
@@ -14,25 +20,37 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.safeAreaViewContainer}>
-      <Text style={styles.homeScreenHeading}>
-        Welcome to the Trivia challenge!
-      </Text>
-      <Text style={styles.homeScreenSubheading}>
-        You will be presented with 10 True or False questions.
-      </Text>
-      <Text style={styles.homeScreenSubheading}>Can you score 100%?</Text>
-      <Button
-        title="BEGIN"
-        styles={beginButtonStyles}
-        colors={[colors.purple, colors.blue]}
-        start={{ x: 0, y: 0.5 }}
-        end={{ x: 1, y: 0.5 }}
-        onPress={() => navigation.navigate("QuizScreen")}
-      />
+      <View style={styles.homeScreenHeaderContainer}>
+        <Text style={styles.headerHeading}>
+          Welcome to the Trivia challenge!
+        </Text>
+      </View>
+      <View style={styles.homeScreenContentsContents}>
+        <Text style={styles.contentsHeading}>
+          You will be presented with 10 True or False questions.
+        </Text>
+        <Text style={styles.contentsHeading}>Can you score 100%?</Text>
+      </View>
+      <View style={styles.homeScreenFooterContainer}>
+        <Button
+          title="BEGIN"
+          styles={beginButtonStyles}
+          colors={[colors.purple, colors.blue]}
+          start={{ x: 0, y: 0.5 }}
+          end={{ x: 1, y: 0.5 }}
+          onPress={() => navigation.navigate("QuizScreen")}
+        />
+      </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create(homeScreenStyles);
 
-export default HomeScreen;
+const mapDispatchToProps = (dispatch) => ({
+  reset: () => {
+    dispatch(reset());
+  },
+});
+
+export default connect(null, mapDispatchToProps)(HomeScreen);
