@@ -4,8 +4,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "../../components/Button";
 import { colors } from "../../assets/global-styles/index";
 import { styles as resultsScreenStyles } from "./styles";
+import HomeScreen from "../HomeScreen/HomeScreen";
 
-const ResultsScreen = () => {
+const ResultsScreen = ({ navigation }) => {
   const playAgainButtonStyles = {
     container: styles.playAgainButton,
     textField: styles.playAgainButtonText,
@@ -24,7 +25,7 @@ const ResultsScreen = () => {
           colors={[colors.purple, colors.blue]}
           start={{ x: 0, y: 0.5 }}
           end={{ x: 1, y: 0.5 }}
-          onPress={() => navigation.navigate("QuizScreen")}
+          onPress={() => navigation.navigate("HomeScreen")}
         />
       </View>
     </SafeAreaView>

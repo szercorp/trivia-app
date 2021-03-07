@@ -5,26 +5,26 @@ import {
 } from "../actions/actionTypes";
 
 const initialState = {
-  total_answers: 0,
+  answers_total: 0,
   total_questions: 0,
 };
 
-export const totalReducer = (state = initialState, action) => {
+export const totals = (state = initialState, action) => {
   switch (action.type) {
     case INCREMENT_TOTAL_CORRECT:
       return {
         ...state,
-        total_answers: state.total_answers + 1,
+        answers_total: state.answers_total + 1,
       };
     case TOTAL_QUESTIONS_NUMBER:
       return {
         ...state,
-        total_questions: action.total_questions,
+        total_questions: action.payload,
       };
     case RESET_CORRECT_NUMBER:
       return {
         ...state,
-        total_answers: 0,
+        answers_total: 0,
       };
     default:
       return state;

@@ -14,59 +14,40 @@ import ResultsScreen from "../ResultsScreen/ResultsScreen";
 // } from "../../models/trivia/actions";
 import _ from "lodash";
 
-const QuizScreen = ({ increment, totals, navigation, total_questions }) => {
-  const [data, setData] = useState([]);
+const QuizScreen = ({ increment, navigation, totals, total_questions }) => {
+  const [questions, setQuestions] = useState([]);
   const [current_question, setCurrentQuestion] = useState(0);
-  const [loading, setLoading] = useState("Loading Quiz");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetch("https://opentdb.com/api.php?amount=10&difficulty=hard&type=boolean")
       .then((response) => response.json())
-      // .then((data) => setData(data.results));
-      .then((responseData) => {
-        switch (responseData.response_code) {
-          case 2:
-            setLoading("There was an error loading the questions");
-            break;
-          case 0:
-            total_questions(responseData.results.length);
-            // totalQuestionsNumber(data.results.length);
-            setData(responseData.results);
-            break;
-          default:
-            setLoading(
-              "There was an error loading the questions (Unexpected response from the API)"
-            );
-        }
+      .then((data) => {
+        setLoading(true);
+        total_questions(data.results.length);
+        setQuestions(data.results);
+        // console.log("Number of Questions:", data.results.length);
       });
-    // .then((responseData) => {
-    //   switch (responseData.response_code) {
+
+    // .then((data) => {
+    //   switch (data.response_code) {
     //     case 2:
-    //       setLoading("There was an error loading the questions!");
+    //       setLoading("There was an error loading the questions");
     //       break;
     //     case 0:
-    //       totalQuestionsNumber(responseData.results.length);
-    //       setData(responseData.results);
+    //       total_questions(data.results.length);
+    //       setQuestions(data.results);
     //       break;
     //     default:
     //       setLoading(
     //         "There was an error loading the questions (Unexpected response from the API)"
     //       );
     //   }
-    // })
-    // .catch((error) => {
-    //   setLoading("There was an error loading the questions" + error);
-    // })
-    // .finally(() => {
-    //   setLoading(
-    //     "There was an error loading the questions (Could not connect to the API)"
-    //   );
     // });
   }, []);
 
-  console.log(data);
-
-  // console.log(data[current_question].category);
+  console.log(questions);
+  // console.log(totals);
 
   const trueButtonStyles = {
     container: styles.trueButton,
@@ -79,38 +60,29 @@ const QuizScreen = ({ increment, totals, navigation, total_questions }) => {
   };
 
   const onNextQuestion = (answer) => {
-    let correct_answer = data[current_question].correct_answer == "True";
+    let correct_answer = questions[current_question].correct_answer == "True";
 
     console.log("Correct:", correct_answer);
 
     if (answer == correct_answer) increment();
 
     console.log(totals.total_questions);
+    console.log(total_questions.answers_total);
 
     if (current_question >= totals.total_questions - 1) {
       navigation.navigate("ResultsScreen");
     } else {
       setCurrentQuestion(current_question + 1);
     }
+
+    // if (current_question >= totals - 1) {
+    //   navigation.navigate("ResultsScreen");
+    // } else {
+    //   setCurrentQuestion(current_question + 1);
+    // }
   };
 
-  // const onNextQuestion = (answer) => {
-  //   let correct_answer = data[current_question].correct_answer == "True";
-
-  //   if (answer == correct_answer) {
-  //     incrementCorrectAnswers();
-  //   }
-
-  //   setCurrentQuestion(current_question + 1);
-
-  //   // if (current_question >= totals.totalQuestionsNumber - 1) {
-  //   //   navigation.navigate("ResultsScreen");
-  //   // } else {
-  //   //   setCurrentQuestion(current_question + 1);
-  //   // }
-  // };
-
-  if (_.isEmpty(data)) {
+  if (_.isEmpty(questions)) {
     return (
       <View style={styles.loadingContainer}>
         <Text style={styles.loadingContainerText}>{loading}</Text>
@@ -122,13 +94,13 @@ const QuizScreen = ({ increment, totals, navigation, total_questions }) => {
     <SafeAreaView style={styles.safeAreaViewContainer}>
       <View style={styles.quizScreenHeaderContainer}>
         <Text style={styles.headerHeading}>
-          {data[current_question].category}
+          {questions[current_question].category}
         </Text>
       </View>
       <View style={styles.quizScreenContentsContainer}>
         <View style={styles.questionsContainer}>
           <Text style={styles.questionsText}>
-            {data[current_question].question}
+            {questions[current_question].question}
           </Text>
         </View>
         <View style={styles.questionsNumberContainer}>
@@ -159,22 +131,9 @@ const mapDispatchToProps = (dispatch) => ({
   increment: () => {
     dispatch(increment());
   },
-  total_questions: () => {
-    dispatch(total_questions());
+  total_questions: (totals) => {
+    dispatch(total_questions(totals));
   },
 });
-
-// const mapStateToProps = ({ totals }) => ({ totals });
-
-// const mapDispatchToProps = (dispatch) => ({
-//   incrementCorrectAnswers: () => {
-//     dispatch(incrementCorrectAnswers());
-//   },
-//   totalQuestionsNumber: () => {
-//     dispatch(totalQuestionsNumber());
-//   },
-// });
-
-// export default connect(mapStateToProps, mapDispatchToProps)(QuizScreen);
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuizScreen);
