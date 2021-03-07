@@ -20,14 +20,24 @@ export const styles = {
     fontFamily: "MontserratBold",
     textAlign: "center",
   },
+  headerScore: {
+    color: colors.white,
+    fontSize: 25,
+  },
   resultsScreenContentsContainer: {
     width: 350,
     height: 500,
     backgroundColor: "#1a1a36",
     borderRadius: 20,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-around",
   },
+  contentsMessage: {
+    color: colors.white,
+    fontSize: 25,
+    textAlign: "center",
+  },
+  goatImage: { width: 150, height: 150, marginTop: 50 },
   resultsScreenFooterContainer: {
     width: "100%",
     height: 50,

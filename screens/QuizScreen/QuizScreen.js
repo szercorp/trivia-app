@@ -70,16 +70,10 @@ const QuizScreen = ({ increment, navigation, totals, total_questions }) => {
     console.log(total_questions.answers_total);
 
     if (current_question >= totals.total_questions - 1) {
-      navigation.navigate("ResultsScreen");
+      navigation.navigate("ResultsScreen", { questions });
     } else {
       setCurrentQuestion(current_question + 1);
     }
-
-    // if (current_question >= totals - 1) {
-    //   navigation.navigate("ResultsScreen");
-    // } else {
-    //   setCurrentQuestion(current_question + 1);
-    // }
   };
 
   if (_.isEmpty(questions)) {
