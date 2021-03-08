@@ -1,3 +1,4 @@
+import { wp, hp } from "../../libs/scaling";
 import { colors, shadows } from "../../assets/global-styles/index";
 
 export const styles = {
@@ -9,10 +10,9 @@ export const styles = {
   },
   resultsScreenHeaderContainer: {
     width: "100%",
-    height: 120,
-    marginTop: 50,
+    height: hp(120),
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "center",
   },
   headerHeading: {
     color: colors.white,
@@ -28,8 +28,8 @@ export const styles = {
     fontSize: 18,
   },
   resultsScreenContentsContainer: {
-    width: 355,
-    height: 500,
+    width: wp(350),
+    height: hp(400),
     backgroundColor: "#1a1a36",
     borderRadius: 20,
     alignItems: "center",
@@ -41,53 +41,52 @@ export const styles = {
     justifyContent: "space-around",
   },
   flatListContainer: {
-    marginTop: 16,
+    marginTop: hp(16),
   },
   listItem: {
     flex: 1,
-    width: 320,
-    height: 218,
+    width: wp(320),
+    height: hp(150),
     flexDirection: "row",
-    marginBottom: 30,
     backgroundColor: "#070723",
     borderRadius: 15,
+    marginBottom: hp(13),
   },
   checkIconContainer: {
-    marginTop: 10,
-    marginLeft: 15,
+    marginLeft: wp(10),
+    marginRight: wp(10),
   },
   checkIcon: {
     width: 30,
     height: 30,
+    marginTop: hp(8),
   },
   questionText: {
-    width: 250,
-    height: "100%",
-    fontSize: 18,
+    width: wp(260),
+    fontSize: 15,
     color: colors.white,
     textAlign: "left",
-    lineHeight: 25,
-    marginLeft: 15,
-    marginTop: 6,
+    lineHeight: hp(25),
   },
   contentsMessage: {
     color: colors.white,
     fontSize: 20,
-    textAlign: "center",
+    textAlign: "justify",
   },
   goatImage: { width: 150, height: 150, marginTop: 50 },
   resultsScreenFooterContainer: {
     width: "100%",
-    height: 50,
-    marginBottom: 50,
+    height: hp(50),
     alignItems: "center",
+    marginBottom: hp(40),
   },
   playAgainButton: {
-    width: 200,
+    width: wp(200),
     height: "100%",
     borderRadius: 50,
     overflow: "hidden",
-    // margin: 50,
+    alignItems: "center",
+    justifyContent: "center",
     //shadow - ios
     shadowOffset: shadows.purpleShadowOffset,
     shadowColor: shadows.purpleShadowColor,
@@ -97,7 +96,7 @@ export const styles = {
     elevation: shadows.purpleShadowElevation,
   },
   playAgainButtonGradient: {
-    width: 200,
+    width: wp(200),
     height: "100%",
     justifyContent: "center",
     alignItems: "center",

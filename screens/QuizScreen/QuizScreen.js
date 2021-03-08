@@ -19,27 +19,11 @@ const QuizScreen = ({ increment, navigation, totals, total_questions }) => {
         setLoadingText(true);
         total_questions(data.results.length);
         setQuestions(data.results);
-        // console.log("Number of Questions:", data.results.length);
+      })
+      .catch((error) => {
+        setLoadingText("There was an error loading the quiz" + error);
       });
-
-    // .then((data) => {
-    //   switch (data.response_code) {
-    //     case 2:
-    //       setLoading("There was an error loading the questions");
-    //       break;
-    //     case 0:
-    //       total_questions(data.results.length);
-    //       setQuestions(data.results);
-    //       break;
-    //     default:
-    //       setLoading(
-    //         "There was an error loading the questions (Unexpected response from the API)"
-    //       );
-    //   }
-    // });
   }, []);
-
-  // console.log(questions);
 
   const trueButtonStyles = {
     container: styles.trueButton,
@@ -84,11 +68,11 @@ const QuizScreen = ({ increment, navigation, totals, total_questions }) => {
             {questions[current_question].question}
           </Text>
         </View>
-        <View style={styles.questionsNumberContainer}>
-          <Text style={styles.questionsNumber}>
-            {current_question + 1} of {totals.total_questions}
-          </Text>
-        </View>
+      </View>
+      <View style={styles.questionsNumberContainer}>
+        <Text style={styles.questionsNumber}>
+          {current_question + 1} of {totals.total_questions}
+        </Text>
       </View>
       <View style={styles.quizScreenFooterContainer}>
         <Button

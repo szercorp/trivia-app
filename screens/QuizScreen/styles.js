@@ -1,3 +1,4 @@
+import { wp, hp } from "../../libs/scaling";
 import { colors, shadows } from "../../assets/global-styles/index";
 
 export const styles = {
@@ -9,10 +10,9 @@ export const styles = {
   },
   quizScreenHeaderContainer: {
     width: "100%",
-    height: 120,
-    marginTop: 50,
+    height: hp(120),
     alignItems: "center",
-    // justifyContent: "center",
+    justifyContent: "center",
   },
   headerHeading: {
     color: colors.white,
@@ -21,13 +21,12 @@ export const styles = {
     textAlign: "center",
   },
   quizScreenContentsContainer: {
-    height: 500,
     alignItems: "center",
     justifyContent: "space-around",
   },
   questionsContainer: {
-    width: 350,
-    height: 300,
+    width: wp(350),
+    height: hp(200),
     backgroundColor: "#1a1a36",
     borderRadius: 20,
     alignItems: "center",
@@ -36,27 +35,25 @@ export const styles = {
   questionsText: {
     color: colors.white,
     fontSize: 20,
-    textAlign: "left",
-    width: 300,
-    lineHeight: 25,
-  },
-  questionsNumberContainer: {
-    marginBottom: 45,
+    textAlign: "justify",
+    width: "100%",
+    lineHeight: hp(25),
+    padding: 20,
   },
   questionsNumber: {
     color: colors.white,
-    fontSize: 20,
+    fontSize: 25,
   },
   quizScreenFooterContainer: {
     width: "100%",
-    height: 50,
-    marginBottom: 50,
+    height: hp(50),
     flexDirection: "row",
     justifyContent: "space-around",
+    marginBottom: hp(40),
   },
   trueButton: {
     backgroundColor: "green",
-    width: 150,
+    width: wp(150),
     borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
@@ -68,7 +65,7 @@ export const styles = {
   },
   falseButton: {
     backgroundColor: "red",
-    width: 150,
+    width: wp(150),
     borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",

@@ -1,3 +1,4 @@
+import { wp, hp } from "../../libs/scaling";
 import { colors, shadows } from "../../assets/global-styles/index";
 
 export const styles = {
@@ -9,8 +10,7 @@ export const styles = {
   },
   homeScreenHeaderContainer: {
     width: "100%",
-    height: 120,
-    marginTop: 50,
+    height: hp(120),
     alignItems: "center",
     justifyContent: "center",
   },
@@ -21,7 +21,7 @@ export const styles = {
     textAlign: "center",
   },
   homeScreenContentsContainer: {
-    height: 400,
+    height: hp(400),
     alignItems: "center",
     justifyContent: "space-around",
   },
@@ -33,16 +33,15 @@ export const styles = {
   },
   homeScreenFooterContainer: {
     width: "100%",
-    height: 50,
-    marginBottom: 50,
+    height: hp(50),
     alignItems: "center",
+    marginBottom: hp(40),
   },
   beginButton: {
     width: 200,
     height: "100%",
     borderRadius: 50,
     overflow: "hidden",
-    // margin: 50,
     //shadow - ios
     shadowOffset: shadows.purpleShadowOffset,
     shadowColor: shadows.purpleShadowColor,
@@ -60,6 +59,6 @@ export const styles = {
   beginButtonText: {
     fontFamily: "MontserratBold",
     fontSize: 16,
-    color: colors.offWhite,
+    color: colors.white,
   },
 };
