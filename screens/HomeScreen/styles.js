@@ -26,8 +26,9 @@ export const styles = {
     justifyContent: "space-around",
   },
   contentsHeading: {
+    width: wp(330),
     color: colors.white,
-    fontSize: 25,
+    fontSize: 20,
     fontFamily: "Montserrat",
     textAlign: "center",
   },

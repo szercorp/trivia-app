@@ -5,9 +5,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
-import HomeScreen from "./screens/HomeScreen/HomeScreen";
-import QuizScreen from "./screens/QuizScreen/QuizScreen";
-import ResultsScreen from "./screens/ResultsScreen/ResultsScreen";
+import HomeScreen from "./screens/HomeScreen";
+import QuizScreen from "./screens/QuizScreen";
+import ResultsScreen from "./screens/ResultsScreen";
 import { Provider } from "react-redux";
 import configureStore from "./models/trivia/configureStore";
 

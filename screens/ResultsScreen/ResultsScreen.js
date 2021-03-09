@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { reset } from "../../models/trivia/actions";
-import { StyleSheet, View, Text, Image, FlatList } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  FlatList,
+  BackHandler,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "../../components/Button";
 import { colors } from "../../assets/global-styles/index";
@@ -10,12 +17,23 @@ import { styles as resultsScreenStyles } from "./styles";
 const ResultsScreen = ({ navigation, totals, reset, route }) => {
   const [perfect, setPerfect] = useState(false);
 
-  const { data } = route.params;
+  const { questions } = route.params;
+
+  console.log(questions);
+  console.log(totals.correct_answers);
+
+  const onSwipeOrBackPress = () => {
+    navigation.navigate("HomeScreen");
+    return true;
+  };
 
   useEffect(() => {
-    if (totals.correct_answers == totals.total_questions) {
-      setPerfect(true);
-    }
+    if (totals.correct_answers == totals.total_questions) setPerfect(true);
+
+    BackHandler.addEventListener("hardwareBackPress", onSwipeOrBackPress);
+
+    return () =>
+      BackHandler.removeEventListener("hardwareBackPress", onSwipeOrBackPress);
   }, []);
 
   const playAgain = () => {
@@ -74,9 +92,9 @@ const ResultsScreen = ({ navigation, totals, reset, route }) => {
         ) : (
           <FlatList
             style={styles.flatListContainer}
-            data={data}
+            data={questions}
             renderItem={({ item }) => <Item item={item} />}
-            keyExtractor={(item) => item.item}
+            keyExtractor={(item, index) => item.question}
           ></FlatList>
         )}
 

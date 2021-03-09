@@ -37,11 +37,12 @@ const QuizScreen = ({ increment, navigation, totals, total_questions }) => {
 
   const onNextQuestion = (answer) => {
     let correct_answer = questions[current_question].correct_answer == "True";
+    console.log(correct_answer);
 
     if (answer == correct_answer) increment();
 
     if (current_question >= totals.total_questions - 1) {
-      navigation.navigate("ResultsScreen", { data: questions });
+      navigation.navigate("ResultsScreen", { questions });
     } else {
       setCurrentQuestion(current_question + 1);
     }
