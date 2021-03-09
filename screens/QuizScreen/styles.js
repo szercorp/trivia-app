@@ -1,4 +1,4 @@
-import { wp, hp } from "../../libs/scaling";
+import { wp, hp } from "../../libs";
 import { colors, shadows } from "../../assets/global-styles/index";
 
 export const styles = {

@@ -1,3 +1,9 @@
+//Action types for the fetching actions
+export const FETCH_PRODUCTS_PENDING = "FETCH_PRODUCTS_PENDING";
+export const FETCH_PRODUCTS_SUCCESS = "FETCH_PRODUCTS_SUCCESS";
+export const FETCH_PRODUCTS_ERROR = "FETCH_PRODUCTS_ERROR";
+
+//Action types for the questions logic
 export const INCREMENT_TOTAL_CORRECT = "INCREMENT_TOTAL_CORRECT";
 export const TOTAL_QUESTIONS_NUMBER = "TOTAL_QUESTIONS_NUMBER";
 export const RESET_CORRECT_NUMBER = "RESET_CORRECT_NUMBER";
