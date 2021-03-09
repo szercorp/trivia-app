@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { reset } from "../../models/trivia/actions";
+import { resetAction } from "../../models/trivia/actions";
 import { StyleSheet, View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "../../components/Button";
 import { colors } from "../../assets/global-styles/index";
 import { styles as homeScreenStyles } from "./styles";
 
-const HomeScreen = ({ navigation, reset }) => {
+const HomeScreen = ({ navigation, resetAction }) => {
   useEffect(() => {
-    reset();
+    resetAction();
   }, []);
 
   const beginButtonStyles = {
@@ -48,8 +48,8 @@ const HomeScreen = ({ navigation, reset }) => {
 const styles = StyleSheet.create(homeScreenStyles);
 
 const mapDispatchToProps = (dispatch) => ({
-  reset: () => {
-    dispatch(reset());
+  resetAction: () => {
+    dispatch(resetAction());
   },
 });
 

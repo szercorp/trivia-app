@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { reset } from "../../models/trivia/actions";
+import { resetAction } from "../../models/trivia/actions";
 import {
   StyleSheet,
   View,
@@ -10,17 +10,16 @@ import {
   BackHandler,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import PerfectMessage from "./components/PerfectMessage";
+import FlatListItem from "./components/FlatListItem";
 import Button from "../../components/Button";
 import { colors } from "../../assets/global-styles/index";
 import { styles as resultsScreenStyles } from "./styles";
 
-const ResultsScreen = ({ navigation, totals, reset, route }) => {
+const ResultsScreen = ({ navigation, totals, resetAction, route }) => {
   const [perfect, setPerfect] = useState(false);
 
   const { questions } = route.params;
-
-  console.log(questions);
-  console.log(totals.correct_answers);
 
   const onSwipeOrBackPress = () => {
     navigation.navigate("HomeScreen");
@@ -37,7 +36,7 @@ const ResultsScreen = ({ navigation, totals, reset, route }) => {
   }, []);
 
   const playAgain = () => {
-    reset();
+    resetAction();
     navigation.navigate("HomeScreen");
   };
 
@@ -45,27 +44,6 @@ const ResultsScreen = ({ navigation, totals, reset, route }) => {
     container: styles.playAgainButton,
     textField: styles.playAgainButtonText,
     gradient: styles.playAgainButtonGradient,
-  };
-
-  const Item = ({ item }) => {
-    return (
-      <View style={styles.listItem}>
-        <View style={styles.checkIconContainer}>
-          {item.correct_answer === "True" ? (
-            <Image
-              style={styles.checkIcon}
-              source={require("../../assets/images/checked.png")}
-            />
-          ) : (
-            <Image
-              style={styles.checkIcon}
-              source={require("../../assets/images/cancel.png")}
-            />
-          )}
-        </View>
-        <Text style={styles.questionText}>{item.question}</Text>
-      </View>
-    );
   };
 
   return (
@@ -79,28 +57,17 @@ const ResultsScreen = ({ navigation, totals, reset, route }) => {
       </View>
       <View style={styles.resultsScreenContentsContainer}>
         {perfect === true ? (
-          <View style={styles.perfectScoreContainer}>
-            <Text style={styles.contentsMessage}>No need for results</Text>
-            <Text style={styles.contentsMessage}>
-              You are the G.O.A.T of this game!!!
-            </Text>
-            <Image
-              source={require("../../assets/images/goat.png")}
-              style={styles.goatImage}
-            />
-          </View>
+          <PerfectMessage />
         ) : (
           <FlatList
             style={styles.flatListContainer}
             data={questions}
-            renderItem={({ item }) => <Item item={item} />}
+            renderItem={({ item }) => (
+              <FlatListItem item={item} correct_answer={item.correct_answer} />
+            )}
             keyExtractor={(item, index) => item.question}
-          ></FlatList>
+          />
         )}
-
-        <View>
-          <Text style={{ color: "white" }}>{totals.totals}</Text>
-        </View>
       </View>
       <View style={styles.resultsScreenFooterContainer}>
         <Button
@@ -121,8 +88,8 @@ const styles = StyleSheet.create(resultsScreenStyles);
 const mapStateToProps = ({ totals }) => ({ totals });
 
 const mapDispatchToProps = (dispatch) => ({
-  reset: () => {
-    dispatch(reset());
+  resetAction: () => {
+    dispatch(resetAction());
   },
 });
 

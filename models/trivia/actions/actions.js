@@ -4,9 +4,9 @@ import {
   RESET_CORRECT_NUMBER,
 } from "./actionTypes";
 
-export const increment = () => ({ type: INCREMENT_TOTAL_CORRECT });
-export const total_questions = (total) => ({
+export const incrementAction = () => ({ type: INCREMENT_TOTAL_CORRECT });
+export const totalQuestionsAction = (total) => ({
   type: TOTAL_QUESTIONS_NUMBER,
   payload: total,
 });
-export const reset = () => ({ type: RESET_CORRECT_NUMBER });
+export const resetAction = () => ({ type: RESET_CORRECT_NUMBER });

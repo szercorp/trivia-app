@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { increment, total_questions } from "../../models/trivia/actions";
+import _ from "lodash";
+import {
+  incrementAction,
+  totalQuestionsAction,
+} from "../../models/trivia/actions";
 import { StyleSheet, View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "../../components/Button";
+import { regex } from "./constants";
 import { styles as quizScreenStyles } from "./styles";
-import _ from "lodash";
 
-const QuizScreen = ({ increment, navigation, totals, total_questions }) => {
+const QuizScreen = ({
+  incrementAction,
+  navigation,
+  totals,
+  totalQuestionsAction,
+}) => {
   const [questions, setQuestions] = useState([]);
   const [current_question, setCurrentQuestion] = useState(0);
   const [loadingText, setLoadingText] = useState("Loading Quiz...");
@@ -16,8 +25,19 @@ const QuizScreen = ({ increment, navigation, totals, total_questions }) => {
     fetch("https://opentdb.com/api.php?amount=10&difficulty=hard&type=boolean")
       .then((response) => response.json())
       .then((data) => {
+        // console.log(data.results.map((x) => x.question));
+        // console.log(JSON.stringify(data.results.question));
         setLoadingText(true);
-        total_questions(data.results.length);
+        totalQuestionsAction(data.results.length);
+        // const newData = JSON.stringify(data, (key, val) => {
+        //   if (typeof val === "string") {
+        //     return val.replace(/&quot;/g, "");
+        //   }
+        //   return val;
+        // });
+        // // data = data.replace(/&quot;/g, "");
+        // // console.log(JSON.parse(data));
+        // setQuestions(JSON.parse(newData.results));
         setQuestions(data.results);
       })
       .catch((error) => {
@@ -36,10 +56,9 @@ const QuizScreen = ({ increment, navigation, totals, total_questions }) => {
   };
 
   const onNextQuestion = (answer) => {
-    let correct_answer = questions[current_question].correct_answer == "True";
-    console.log(correct_answer);
+    const correct_answer = questions[current_question].correct_answer == "True";
 
-    if (answer == correct_answer) increment();
+    answer == correct_answer && incrementAction();
 
     if (current_question >= totals.total_questions - 1) {
       navigation.navigate("ResultsScreen", { questions });
@@ -66,14 +85,14 @@ const QuizScreen = ({ increment, navigation, totals, total_questions }) => {
       <View style={styles.quizScreenContentsContainer}>
         <View style={styles.questionsContainer}>
           <Text style={styles.questionsText}>
-            {questions[current_question].question}
+            {questions[current_question].question.replace(regex, "")}
           </Text>
         </View>
-      </View>
-      <View style={styles.questionsNumberContainer}>
-        <Text style={styles.questionsNumber}>
-          {current_question + 1} of {totals.total_questions}
-        </Text>
+        <View style={styles.questionsNumberContainer}>
+          <Text style={styles.questionsNumber}>
+            {current_question + 1} of {totals.total_questions}
+          </Text>
+        </View>
       </View>
       <View style={styles.quizScreenFooterContainer}>
         <Button
@@ -96,11 +115,11 @@ const styles = StyleSheet.create(quizScreenStyles);
 const mapStateToProps = ({ totals }) => ({ totals });
 
 const mapDispatchToProps = (dispatch) => ({
-  increment: () => {
-    dispatch(increment());
+  incrementAction: () => {
+    dispatch(incrementAction());
   },
-  total_questions: (totals) => {
-    dispatch(total_questions(totals));
+  totalQuestionsAction: (totals) => {
+    dispatch(totalQuestionsAction(totals));
   },
 });
 

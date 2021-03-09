@@ -6,13 +6,14 @@ export const styles = {
     flex: 1,
     backgroundColor: "#070723",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
   },
   resultsScreenHeaderContainer: {
     width: "100%",
-    height: hp(120),
+    height: hp(90),
     alignItems: "center",
     justifyContent: "center",
+    marginTop: hp(20),
   },
   headerHeading: {
     color: colors.white,
@@ -29,7 +30,7 @@ export const styles = {
   },
   resultsScreenContentsContainer: {
     width: wp(350),
-    height: hp(400),
+    height: hp(340),
     backgroundColor: "#1a1a36",
     borderRadius: 20,
     alignItems: "center",
@@ -41,7 +42,7 @@ export const styles = {
     justifyContent: "space-around",
   },
   flatListContainer: {
-    marginTop: hp(16),
+    marginTop: hp(15),
   },
   listItem: {
     flex: 1,
@@ -76,13 +77,13 @@ export const styles = {
   goatImage: { width: 150, height: 150, marginTop: 50 },
   resultsScreenFooterContainer: {
     width: "100%",
-    height: hp(50),
+    height: hp(90),
     alignItems: "center",
-    marginBottom: hp(40),
+    justifyContent: "center",
+    marginBottom: hp(20),
   },
   playAgainButton: {
     width: wp(200),
-    height: "100%",
     borderRadius: 50,
     overflow: "hidden",
     alignItems: "center",
@@ -97,7 +98,7 @@ export const styles = {
   },
   playAgainButtonGradient: {
     width: wp(200),
-    height: "100%",
+    height: hp(50),
     justifyContent: "center",
     alignItems: "center",
   },
