@@ -47,8 +47,6 @@ const QuizScreen = ({
   };
 
   const onNextQuestion = (answer) => {
-    console.log(userAnswer);
-
     const correct_answer =
       totals.questions[current_question].correct_answer == "True";
 

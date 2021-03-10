@@ -22,6 +22,20 @@ const loadFonts = () => {
 
 const store = configureStore();
 
+const AppNavigator = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      <Stack.Screen name="QuizScreen" component={QuizScreen} />
+      <Stack.Screen name="ResultsScreen" component={ResultsScreen} />
+    </Stack.Navigator>
+  );
+};
+
 const App = () => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
@@ -39,15 +53,7 @@ const App = () => {
     <Provider store={store}>
       <SafeAreaProvider>
         <NavigationContainer>
-          <Stack.Navigator
-            screenOptions={{
-              headerShown: false,
-            }}
-          >
-            <Stack.Screen name="HomeScreen" component={HomeScreen} />
-            <Stack.Screen name="QuizScreen" component={QuizScreen} />
-            <Stack.Screen name="ResultsScreen" component={ResultsScreen} />
-          </Stack.Navigator>
+          <AppNavigator />
         </NavigationContainer>
       </SafeAreaProvider>
     </Provider>
