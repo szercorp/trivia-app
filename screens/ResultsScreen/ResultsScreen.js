@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { resetAction } from "../../models/trivia/actions";
+import { resetQuizAction } from "../../models/trivia/actions";
 import { StyleSheet, View, Text, FlatList, BackHandler } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import PerfectMessage from "./components/PerfectMessage";
@@ -9,16 +9,17 @@ import Button from "../../components/Button";
 import { colors } from "../../assets/global-styles/index";
 import { styles as resultsScreenStyles } from "./styles";
 
-const ResultsScreen = ({ navigation, totals, resetAction, route }) => {
+const ResultsScreen = ({ navigation, resetQuizAction, totals }) => {
   const [perfect, setPerfect] = useState(false);
 
   const onSwipeOrBackPress = () => {
+    resetQuizAction();
     navigation.navigate("HomeScreen");
     return true;
   };
 
   useEffect(() => {
-    if (totals.correct_answers == totals.total_questions) setPerfect(true);
+    if (totals.correctAnswers == totals.totalQuestions) setPerfect(true);
 
     BackHandler.addEventListener("hardwareBackPress", onSwipeOrBackPress);
 
@@ -27,7 +28,7 @@ const ResultsScreen = ({ navigation, totals, resetAction, route }) => {
   }, []);
 
   const playAgain = () => {
-    resetAction();
+    resetQuizAction();
     navigation.navigate("HomeScreen");
   };
 
@@ -42,9 +43,8 @@ const ResultsScreen = ({ navigation, totals, resetAction, route }) => {
       <View style={styles.resultsScreenHeaderContainer}>
         <Text style={styles.headerHeading}>You scored:</Text>
         <Text style={styles.headerScore}>
-          {totals.correct_answers} of {totals.total_questions}
+          {totals.correctAnswers} of {totals.totalQuestions}
         </Text>
-        <Text style={styles.headerMessage}>Scroll to see the results</Text>
       </View>
       <View style={styles.resultsScreenContentsContainer}>
         {perfect === true ? (
@@ -54,7 +54,11 @@ const ResultsScreen = ({ navigation, totals, resetAction, route }) => {
             style={styles.flatListContainer}
             data={totals.questions}
             renderItem={({ item }) => (
-              <FlatListItem item={item} correct_answer={item.correct_answer} />
+              <FlatListItem
+                item={item}
+                correct_answer={item.correct_answer}
+                user_answer={item.user_answer}
+              />
             )}
             keyExtractor={(item, index) => item.question}
           />
@@ -79,8 +83,8 @@ const styles = StyleSheet.create(resultsScreenStyles);
 const mapStateToProps = ({ totals }) => ({ totals });
 
 const mapDispatchToProps = (dispatch) => ({
-  resetAction: () => {
-    dispatch(resetAction());
+  resetQuizAction: () => {
+    dispatch(resetQuizAction());
   },
 });
 

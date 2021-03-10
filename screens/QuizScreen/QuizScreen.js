@@ -5,6 +5,7 @@ import {
   incrementAction,
   saveFetchedQuestionsAction,
   totalQuestionsAction,
+  saveAnswerAction,
 } from "../../models/trivia/actions";
 import { StyleSheet, View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -16,12 +17,12 @@ const QuizScreen = ({
   incrementAction,
   navigation,
   saveFetchedQuestionsAction,
+  saveAnswerAction,
   totals,
   totalQuestionsAction,
 }) => {
-  const [current_question, setCurrentQuestion] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
   const [loadingText, setLoadingText] = useState("Loading Quiz...");
-  const [userAnswer, setUserAnswer] = useState([]);
 
   useEffect(() => {
     fetch("https://opentdb.com/api.php?amount=10&difficulty=hard&type=boolean")
@@ -29,7 +30,12 @@ const QuizScreen = ({
       .then((data) => {
         setLoadingText(true);
         totalQuestionsAction(data.results.length);
-        saveFetchedQuestionsAction(data.results);
+        saveFetchedQuestionsAction(
+          data.results.map((result) => ({
+            ...result,
+            user_answer: undefined,
+          }))
+        );
       })
       .catch((error) => {
         setLoadingText("There was an error loading the quiz" + error);
@@ -46,16 +52,17 @@ const QuizScreen = ({
     textField: styles.falseButtonText,
   };
 
-  const onNextQuestion = (answer) => {
-    const correct_answer =
-      totals.questions[current_question].correct_answer == "True";
+  const onNextQuestion = (answer, currentQuestion) => {
+    saveAnswerAction({ currentQuestion, answer });
 
-    answer == correct_answer && incrementAction();
+    const isCorrectAnswer = totals.questions[currentQuestion].correct_answer;
 
-    if (current_question >= totals.total_questions - 1) {
-      navigation.navigate("ResultsScreen");
+    answer === isCorrectAnswer && incrementAction();
+
+    if (currentQuestion >= totals.totalQuestions - 1) {
+      navigation.navigate("ResultsScreen", { currentQuestion });
     } else {
-      setCurrentQuestion(current_question + 1);
+      setCurrentQuestion(currentQuestion + 1);
     }
   };
 
@@ -71,18 +78,18 @@ const QuizScreen = ({
     <SafeAreaView style={styles.safeAreaViewContainer}>
       <View style={styles.quizScreenHeaderContainer}>
         <Text style={styles.headerHeading}>
-          {totals.questions[current_question].category}
+          {totals.questions[currentQuestion].category}
         </Text>
       </View>
       <View style={styles.quizScreenContentsContainer}>
         <View style={styles.questionsContainer}>
           <Text style={styles.questionsText}>
-            {totals.questions[current_question].question.replace(regex, "")}
+            {totals.questions[currentQuestion].question.replace(regex, "")}
           </Text>
         </View>
         <View style={styles.questionsNumberContainer}>
           <Text style={styles.questionsNumber}>
-            {current_question + 1} of {totals.total_questions}
+            {currentQuestion + 1} of {totals.totalQuestions}
           </Text>
         </View>
       </View>
@@ -90,12 +97,12 @@ const QuizScreen = ({
         <Button
           title="TRUE"
           styles={trueButtonStyles}
-          onPress={() => onNextQuestion(true)}
+          onPress={() => onNextQuestion("True", currentQuestion)}
         />
         <Button
           title="FALSE"
           styles={falseButtonStyles}
-          onPress={() => onNextQuestion(false)}
+          onPress={() => onNextQuestion("False", currentQuestion)}
         />
       </View>
     </SafeAreaView>
@@ -115,6 +122,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   totalQuestionsAction: (totals) => {
     dispatch(totalQuestionsAction(totals));
+  },
+  saveAnswerAction: (currentQuestion, answer) => {
+    dispatch(saveAnswerAction(currentQuestion, answer));
   },
 });
 

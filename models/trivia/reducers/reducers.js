@@ -1,14 +1,15 @@
 import {
   INCREMENT_TOTAL_CORRECT,
   TOTAL_QUESTIONS_NUMBER,
-  RESET_CORRECT_NUMBER,
   SAVE_FETCHED_QUESTIONS,
+  SAVE_ANSWER,
+  RESET_QUIZ,
 } from "../actions/actionTypes";
 
 const initialState = {
   questions: [],
-  correct_answers: 0,
-  total_questions: 0,
+  correctAnswers: 0,
+  totalQuestions: 0,
 };
 
 export const totalsReducer = (state = initialState, action) => {
@@ -18,21 +19,26 @@ export const totalsReducer = (state = initialState, action) => {
         ...state,
         questions: action.payload,
       };
+    case SAVE_ANSWER:
+      const newQuestions = [...state.questions];
+      newQuestions[action.payload.currentQuestion].user_answer =
+        action.payload.answer;
+      return {
+        ...state,
+        questions: [...newQuestions],
+      };
     case INCREMENT_TOTAL_CORRECT:
       return {
         ...state,
-        correct_answers: state.correct_answers + 1,
+        correctAnswers: state.correctAnswers + 1,
       };
     case TOTAL_QUESTIONS_NUMBER:
       return {
         ...state,
-        total_questions: action.payload,
+        totalQuestions: action.payload,
       };
-    case RESET_CORRECT_NUMBER:
-      return {
-        ...state,
-        correct_answers: 0,
-      };
+    case RESET_QUIZ:
+      return initialState;
     default:
       return state;
   }

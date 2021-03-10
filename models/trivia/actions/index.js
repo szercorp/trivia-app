@@ -1,13 +1,15 @@
 import {
   incrementAction,
   totalQuestionsAction,
-  resetAction,
   saveFetchedQuestionsAction,
+  saveAnswerAction,
+  resetQuizAction,
 } from "./actions";
 
 export {
   incrementAction,
   totalQuestionsAction,
-  resetAction,
   saveFetchedQuestionsAction,
+  saveAnswerAction,
+  resetQuizAction,
 };

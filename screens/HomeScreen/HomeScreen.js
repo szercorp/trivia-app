@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { resetAction } from "../../models/trivia/actions";
+import { resetQuizAction } from "../../models/trivia/actions";
 import { StyleSheet, View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "../../components/Button";
@@ -9,7 +9,7 @@ import { styles as homeScreenStyles } from "./styles";
 
 const HomeScreen = ({ navigation, resetAction }) => {
   useEffect(() => {
-    resetAction();
+    resetQuizAction();
   }, []);
 
   const beginButtonStyles = {
@@ -48,7 +48,7 @@ const HomeScreen = ({ navigation, resetAction }) => {
 const styles = StyleSheet.create(homeScreenStyles);
 
 const mapDispatchToProps = (dispatch) => ({
-  resetAction: () => {
+  resetQuizAction: () => {
     dispatch(resetAction());
   },
 });

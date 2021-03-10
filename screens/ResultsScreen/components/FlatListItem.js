@@ -3,11 +3,11 @@ import { StyleSheet, View, Text, Image } from "react-native";
 import { regex } from "../constants";
 import { styles as resultsScreenStyles } from "../styles";
 
-const FlatListItem = ({ correct_answer, item }) => {
+const FlatListItem = ({ correct_answer, item, user_answer }) => {
   return (
     <View style={styles.listItem}>
       <View style={styles.checkIconContainer}>
-        {correct_answer === "True" ? (
+        {correct_answer === user_answer ? (
           <Image
             style={styles.checkIcon}
             source={require("../../../assets/images/checked.png")}
