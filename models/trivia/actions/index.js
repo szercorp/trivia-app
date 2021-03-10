@@ -1,3 +1,13 @@
-import { incrementAction, totalQuestionsAction, resetAction } from "./actions";
+import {
+  incrementAction,
+  totalQuestionsAction,
+  resetAction,
+  saveFetchedQuestionsAction,
+} from "./actions";
 
-export { incrementAction, totalQuestionsAction, resetAction };
+export {
+  incrementAction,
+  totalQuestionsAction,
+  resetAction,
+  saveFetchedQuestionsAction,
+};

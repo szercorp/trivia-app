@@ -1,14 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { resetAction } from "../../models/trivia/actions";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  FlatList,
-  BackHandler,
-} from "react-native";
+import { StyleSheet, View, Text, FlatList, BackHandler } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import PerfectMessage from "./components/PerfectMessage";
 import FlatListItem from "./components/FlatListItem";
@@ -18,8 +11,6 @@ import { styles as resultsScreenStyles } from "./styles";
 
 const ResultsScreen = ({ navigation, totals, resetAction, route }) => {
   const [perfect, setPerfect] = useState(false);
-
-  const { questions } = route.params;
 
   const onSwipeOrBackPress = () => {
     navigation.navigate("HomeScreen");
@@ -61,7 +52,7 @@ const ResultsScreen = ({ navigation, totals, resetAction, route }) => {
         ) : (
           <FlatList
             style={styles.flatListContainer}
-            data={questions}
+            data={totals.questions}
             renderItem={({ item }) => (
               <FlatListItem item={item} correct_answer={item.correct_answer} />
             )}
